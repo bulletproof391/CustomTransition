@@ -19,16 +19,16 @@ final class PresentationAnimator: NSObject, UIViewControllerAnimatedTransitionin
         return view
     }()
 
-    lazy var dimmingView: UIView = {
-        let view: UIView = .init()
-        view.backgroundColor = .black
-
-        return view
-    }()
-
-    lazy var whiteView: UIView = {
+    lazy var shadowView: UIView = {
         let view: UIView = .init()
         view.backgroundColor = .white
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowRadius = 8.0
+        view.layer.shadowOffset = .init(
+            width: -1.0,
+            height: -2.0
+        )
 
         return view
     }()
@@ -66,29 +66,43 @@ final class PresentationAnimator: NSObject, UIViewControllerAnimatedTransitionin
         detailView.layer.cornerRadius = cardView.layer.cornerRadius
         detailView.layer.masksToBounds = true
         detailView.updateConstraintsToCardMode()
+        detailView.closeButton.alpha = 0.0
 
         containerView.addSubview(detailView)
         detailView.layoutIfNeeded()
 
+        // Add shadow
+
+        shadowView.frame = rectangle
+        shadowView.layer.cornerRadius = cardView.layer.cornerRadius
+        containerView.insertSubview(
+            shadowView,
+            belowSubview: detailView
+        )
+
         // Setup Card before transition
 
         cardView.isHidden = true
+        detailView.updateConstraintsToFullMode()
 
         // Animations
 
         let expandAnimator = makeExpandPropertyAnimator()
 
-        detailView.updateConstraintsToFullMode()
-
-        expandAnimator.addAnimations {
+        expandAnimator.addAnimations { [weak self] in
             detailView.frame = transitionContext.finalFrame(for: toVC)
             detailView.layer.cornerRadius = 0.0
+            detailView.closeButton.alpha = 1.0
+
+            self?.shadowView.frame = transitionContext.finalFrame(for: toVC)
+            self?.shadowView.layer.cornerRadius = 0.0
         }
 
         // After animations
 
-        expandAnimator.addCompletion { _ in
+        expandAnimator.addCompletion { [weak self] _ in
             cardView.isHidden = false
+            self?.shadowView.removeFromSuperview()
             transitionContext.completeTransition(true)
         }
 
@@ -110,5 +124,12 @@ final class PresentationAnimator: NSObject, UIViewControllerAnimatedTransitionin
         )
 
         return animator
+    }
+
+    private func removeShadowFor(_ view: UIView) {
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowOpacity = 0.0
+        view.layer.shadowRadius = 0.0
+        view.layer.shadowOffset = .zero
     }
 }

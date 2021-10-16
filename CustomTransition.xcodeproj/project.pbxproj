@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A16D979271AD7F3004FF1BA /* AppDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A16D978271AD7F3004FF1BA /* AppDetailView.swift */; };
 		0AE26E7326F7392F0005916D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE26E7226F7392F0005916D /* AppDelegate.swift */; };
 		0AE26E7726F7392F0005916D /* DailyAppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE26E7626F7392F0005916D /* DailyAppsViewController.swift */; };
 		0AE26E7C26F739310005916D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AE26E7B26F739310005916D /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A16D978271AD7F3004FF1BA /* AppDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailView.swift; sourceTree = "<group>"; };
 		0AE26E6F26F7392F0005916D /* CustomTransition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomTransition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE26E7226F7392F0005916D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AE26E7626F7392F0005916D /* DailyAppsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAppsViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			children = (
 				0AE26E9B26F77E770005916D /* View */,
 				FFEA897C26FA4B610024AE1B /* AppDetailViewController.swift */,
+				0A16D978271AD7F3004FF1BA /* AppDetailView.swift */,
 			);
 			path = AppDetail;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				0AE26E8B26F743010005916D /* DailyAppsCardCell.swift in Sources */,
 				0AE26E9826F779D00005916D /* AppDetailContentView.swift in Sources */,
 				0AE8ED0626F84748009BBAEB /* DailyAppsCardView+Presentation.swift in Sources */,
+				0A16D979271AD7F3004FF1BA /* AppDetailView.swift in Sources */,
 				FFFBF9A726FA29CE003B0CC3 /* DismissalInteractiveTransition.swift in Sources */,
 				0AE8ED0026F79599009BBAEB /* TransitionManager.swift in Sources */,
 			);

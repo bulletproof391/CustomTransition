@@ -28,9 +28,16 @@ final class DismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         return view
     }()
 
-    lazy var whiteView: UIView = {
+    lazy var shadowView: UIView = {
         let view: UIView = .init()
         view.backgroundColor = .white
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowRadius = 8.0
+        view.layer.shadowOffset = .init(
+            width: -1.0,
+            height: -2.0
+        )
 
         return view
     }()
@@ -68,6 +75,17 @@ final class DismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         detailView.layer.masksToBounds = true
         detailView.layoutIfNeeded()
 
+        // Add shadow
+
+        shadowView.frame = detailView.frame
+        shadowView.alpha = 0.0
+        containerView.insertSubview(
+            shadowView,
+            belowSubview: detailView
+        )
+
+        // Setup Card before transition
+
         cardView.isHidden = true
 
         // Animations
@@ -75,12 +93,17 @@ final class DismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let collapseAnimator = makeCollapsePropertyAnimator()
         let shrinkAnimator = makeShrinkPropertyAnimator()
 
-        shrinkAnimator.addAnimations {
+        shrinkAnimator.addAnimations { [weak self] in
             detailView.transform = CGAffineTransform(
                 scaleX: 0.9,
                 y: 0.9
             )
             detailView.layer.cornerRadius = cardView.layer.cornerRadius
+            detailView.closeButton.alpha = 0.5
+
+            self?.shadowView.alpha = 1.0
+            self?.shadowView.layer.cornerRadius = cardView.layer.cornerRadius
+            self?.shadowView.transform = detailView.transform
         }
 
         shrinkAnimator.addCompletion { _ in
@@ -88,10 +111,12 @@ final class DismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             collapseAnimator.startAnimation()
         }
 
-
-        collapseAnimator.addAnimations {
+        collapseAnimator.addAnimations { [weak self] in
             detailView.transform = .identity
             detailView.frame = rectangle
+            detailView.closeButton.alpha = 0.0
+
+            self?.shadowView.frame = rectangle
         }
 
         // After animations

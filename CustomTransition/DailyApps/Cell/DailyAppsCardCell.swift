@@ -70,6 +70,7 @@ final class DailyAppsCardCell: UITableViewCell {
     }
 
     private func setupShadowViewAppearance() {
+        // TODO: Move shadow adjustments to CardView
         shadowView.layer.cornerRadius = 20.0
         shadowView.layer.shadowColor = UIColor.black.cgColor
         shadowView.layer.shadowOpacity = 0.2
